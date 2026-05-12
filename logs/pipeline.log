@@ -1,0 +1,44 @@
+2026-05-12 15:18:15 | INFO | __main__ | infra_setup.py:13 | Starting Spark session
+2026-05-12 15:22:59 | INFO | __main__ | infra_setup.py:33 | Spark session created successfully
+2026-05-12 15:22:59 | INFO | __main__ | infra_setup.py:60 | Creating database: monitoring_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:68 | Database created successfully: monitoring_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:60 | Creating database: bronze_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:68 | Database created successfully: bronze_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:60 | Creating database: silver_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:68 | Database created successfully: silver_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:60 | Creating database: gold_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:68 | Database created successfully: gold_db
+2026-05-12 15:24:37 | INFO | __main__ | infra_setup.py:70 | All databases created successfully
+2026-05-12 15:24:42 | INFO | __main__ | infra_setup.py:86 | Spark session stopped
+2026-05-12 15:24:42 | INFO | __main__ | infra_setup.py:94 | Total execution time: 386.80 seconds
+2026-05-12 15:24:42 | INFO | py4j.clientserver | clientserver.py:570 | Closing down clientserver connection
+2026-05-12 15:36:31 | INFO | __main__ | audit_setup.py:11 | Starting Spark session
+2026-05-12 15:36:58 | INFO | __main__ | audit_setup.py:31 | Spark session created successfully
+2026-05-12 15:36:58 | INFO | __main__ | audit_setup.py:33 |  initiating  monitorind_db.load_audit table
+2026-05-12 15:37:30 | INFO | __main__ | audit_setup.py:48 | creating monitorind_db.load_audit table successfully
+2026-05-12 15:37:31 | INFO | __main__ | audit_setup.py:65 | Spark session stopped
+2026-05-12 15:37:31 | INFO | __main__ | audit_setup.py:73 | Total execution time: 60.32 seconds
+2026-05-12 15:37:31 | INFO | py4j.clientserver | clientserver.py:570 | Closing down clientserver connection
+2026-05-12 16:28:44 | INFO | __main__ | ingestion_main.py:17 | Starting Spark session
+2026-05-12 16:29:25 | INFO | __main__ | ingestion_main.py:41 | Spark session created successfully
+2026-05-12 16:29:34 | INFO | __main__ | ingestion_main.py:62 | reading file:cust_info.csv 
+2026-05-12 16:30:13 | INFO | __main__ | ingestion_main.py:79 | writing table: cust_info into bronze layer
+2026-05-12 16:30:30 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: CRM.cust_info
+2026-05-12 16:30:30 | INFO | __main__ | ingestion_main.py:62 | reading file:prd_info.csv 
+2026-05-12 16:30:36 | INFO | __main__ | ingestion_main.py:79 | writing table: prd_info into bronze layer
+2026-05-12 16:30:44 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: CRM.prd_info
+2026-05-12 16:30:45 | INFO | __main__ | ingestion_main.py:62 | reading file:sales_details.csv 
+2026-05-12 16:30:51 | INFO | __main__ | ingestion_main.py:79 | writing table: sales_details into bronze layer
+2026-05-12 16:30:55 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: CRM.sales_details
+2026-05-12 16:30:55 | INFO | __main__ | ingestion_main.py:62 | reading file:cust_az12.csv 
+2026-05-12 16:31:00 | INFO | __main__ | ingestion_main.py:79 | writing table: cust_az12 into bronze layer
+2026-05-12 16:31:10 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: ERP.cust_az12
+2026-05-12 16:31:10 | INFO | __main__ | ingestion_main.py:62 | reading file:loc_a101.csv 
+2026-05-12 16:31:17 | INFO | __main__ | ingestion_main.py:79 | writing table: loc_a101 into bronze layer
+2026-05-12 16:31:24 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: ERP.loc_a101
+2026-05-12 16:31:24 | INFO | __main__ | ingestion_main.py:62 | reading file:px_cat_g1v2.csv 
+2026-05-12 16:31:30 | INFO | __main__ | ingestion_main.py:79 | writing table: px_cat_g1v2 into bronze layer
+2026-05-12 16:31:37 | INFO | __main__ | ingestion_main.py:95 | Successfully loaded: ERP.px_cat_g1v2
+2026-05-12 16:31:38 | INFO | __main__ | ingestion_main.py:139 | Spark session stopped
+2026-05-12 16:31:38 | INFO | __main__ | ingestion_main.py:147 | Total execution time: 174.80 seconds
+2026-05-12 16:31:38 | INFO | py4j.clientserver | clientserver.py:570 | Closing down clientserver connection
