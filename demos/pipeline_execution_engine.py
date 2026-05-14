@@ -1,75 +1,69 @@
 class PipelineEngine:
 
-    def __init__(self, spark, config,
-                 cleansing_registry,
-                 standardization_registry,
-                 enrichment_registry):
+    def __init__(self, spark, config,registries):
+                 
+                
+                 
 
         self.spark = spark
         self.config = config
 
-        self.registries = {
-            "cleansing_rules": cleansing_registry,
-            "standardisation_rules": standardization_registry,
-            "enrichment_rules": enrichment_registry
-        }
-    def load_data(self, source_table):
+        self.registries = registries
+    def _load_data(self, source_table):
         return self.spark.table(source_table)
     
 
-    def apply_stage(self, df, stage_name, rules):
+    def _apply_stage(self, df, stage_name, rules):
 
-        registry = self.registries[stage_name]
-
+        try:
+            registry = self.registries[stage_name]
+        except KeyError:
+            raise ValueError(f"Stage not registered: {stage_name}")
+        
         for rule in rules:
-            if rule not in registry:
-                raise Exception(f"Rule not found: {rule}")
+            rule_name = rule['name']
+            params = rule.get('params', {})
+            
+            if rule_name not in registry:
+                raise ValueError(f"Rule not found: {rule_name} in stage {stage_name}")
 
-            df = registry[rule](df)
+            try:
+                df = registry[rule_name](df, **params)
+
+            except Exception as e:
+                raise RuntimeError(
+                    f"Error executing rule {rule_name} in stage {stage_name}: {str(e)}"
+    )
 
         return df
     
-    def write_data(self, df, target_table):
+    def _write_data(self, df, target_table):
         df.write.mode("overwrite").saveAsTable(target_table)
 
     def run(self, table_name):
 
+        if table_name not in self.config:
+            raise ValueError(f"Table not found in config: {table_name}")
+        
         table_config = self.config[table_name]
 
-        df = self.load_data(table_config["source_table"])
+        df = self._load_data(table_config["source_table"])
 
-        df = self.apply_stage(
-            df,
-            "cleansing_rules",
-            table_config.get("cleansing_rules", [])
-        )
+     
 
-        df = self.apply_stage(
-            df,
-            "standardisation_rules",
-            table_config.get("standardisation_rules", [])
-        )
+        for stage_name, rules in table_config['stages'].items():
 
-        df = self.apply_stage(
-            df,
-            "enrichment_rules",
-            table_config.get("enrichment_rules", [])
-        )
+            df = self._apply_stage(
+                df,
+                stage_name,
+                rules
+            )
 
-        self.write_data(df, table_config["target_table"])
+        self._write_data(df, table_config["target_table"])
 
     def run_all(self):
-        for table_name in self.config.keys():
+        for table_name in self.config:
             self.run(table_name)
 
 
             
-engine = PipelineEngine(
-    spark,
-    config,
-    CLEANSING_FUNCTIONS,
-    STANDARDIZATION_FUNCTIONS,
-    ENRICHMENT_FUNCTIONS
-)
-
-engine.run("cust_info")
